@@ -22,6 +22,8 @@ class PokemonRepository {
       print('Pokemons loaded successfully: ${pokemons.length} pokemons');
       offset += limit;
       return pokemons;
+    } else if (response.statusCode == 400) {
+      throw Exception('Pokemon not found');
     } else {
       print('Failed to load pokemons. Status code: ${response.statusCode}');
       throw Exception('Failed to load pokemons: ${response.statusCode}');

@@ -6,19 +6,22 @@ import 'repositories/pokemon_repository.dart';
 import 'views/pokemon_list_view.dart';
 
 void main() {
-  runApp(const MyApp());
+  final PokemonBloc pokemonBloc = PokemonBloc(PokemonRepository());
+  runApp(MyApp(pokemonBloc: pokemonBloc));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key, required this.pokemonBloc}) : super(key: key);
+
+  final PokemonBloc pokemonBloc;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.red),
-      home: BlocProvider(
-        create: (context) => PokemonBloc(PokemonRepository())..add(FetchPokemons()),
-        child: PokemonListView(),
+      home: BlocProvider.value(
+        value: pokemonBloc,
+        child: const PokemonListView(),
       ),
     );
   }
