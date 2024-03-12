@@ -10,15 +10,22 @@ abstract class PokemonState extends Equatable {
 
 class PokemonInitial extends PokemonState {}
 
-class PokemonLoading extends PokemonState {}
-
-class PokemonLoaded extends PokemonState {
+class PokemonLoading extends PokemonState {
   final List<Pokemon> pokemons;
-
-  const PokemonLoaded(this.pokemons);
+  PokemonLoading(this.pokemons);
 
   @override
   List<Object> get props => [pokemons];
+}
+
+class PokemonLoaded extends PokemonState {
+  final List<Pokemon> pokemons;
+  final bool hasMore;
+
+  PokemonLoaded(this.pokemons, {required this.hasMore});
+
+  @override
+  List<Object> get props => [pokemons, hasMore];
 }
 
 class PokemonError extends PokemonState {

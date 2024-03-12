@@ -6,7 +6,7 @@ import '../bloc/pokemon_state.dart';
 import '../widgets/pokemon_list_item.dart';
 
 class PokemonListView extends StatelessWidget {
-  const PokemonListView({super.key});
+  const PokemonListView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +14,22 @@ class PokemonListView extends StatelessWidget {
       appBar: AppBar(title: const Text('Pokedex')),
       body: BlocBuilder<PokemonBloc, PokemonState>(
         builder: (context, state) {
-          if (state is PokemonLoading) {
+          if (state is PokemonLoading && state.pokemons.isEmpty) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is PokemonLoaded) {
-            return ListView.builder(
-              itemCount: state.pokemons.length,
-              itemBuilder: (context, index) {
-                final pokemon = state.pokemons[index];
-                return PokemonListItem(pokemon: pokemon);
-              },
+            return Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: state.pokemons.length,
+                    itemBuilder: (context, index) {
+                      final pokemon = state.pokemons[index];
+                      return PokemonListItem(pokemon: pokemon);
+                    },
+                  ),
+                ),
+                if (state.hasMore) const CircularProgressIndicator(),
+              ],
             );
           } else if (state is PokemonError) {
             return Center(
@@ -34,14 +41,13 @@ class PokemonListView extends StatelessWidget {
                     onPressed: () => context.read<PokemonBloc>().add(FetchPokemons()),
                     child: const Text('Try Again'),
                   ),
-                  Image.asset('images/sad_pikachu.png')
+                  Image.asset('images/sad_pikachu.png'),
                 ],
               ),
             );
           } else {
             return Text('Current state: $state');
           }
-          // return const Text("This");
         },
       ),
     );

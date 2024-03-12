@@ -4,9 +4,11 @@ import '../models/pokemon_model.dart';
 
 class PokemonRepository {
   final baseUrl = 'https://pokeapi.co/api/v2/pokemon';
+  int offset = 0;
+  int limit = 5;
 
   Future<List<Pokemon>> fetchPokemons() async {
-    final response = await http.get(Uri.parse(baseUrl));
+    final response = await http.get(Uri.parse('$baseUrl?offset=$offset&limit=$limit'));
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
       List<dynamic> pokemonsJson = data['results'];
@@ -16,6 +18,7 @@ class PokemonRepository {
         return Pokemon(id: id, name: name);
       }).toList();
       print('Pokemons loaded successfully: ${pokemons.length} pokemons');
+      offset += limit;
       return pokemons;
     } else {
       print('Failed to load pokemons. Status code: ${response.statusCode}');
