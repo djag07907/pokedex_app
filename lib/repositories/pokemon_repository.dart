@@ -6,7 +6,7 @@ import '../models/pokemon_model.dart';
 class PokemonRepository {
   final baseUrl = 'https://pokeapi.co/api/v2/pokemon';
   int offset = 0;
-  int limit = 1302; //Current number of total pokemon @ march/12/2024
+  int limit = 10;
 
   Future<List<Pokemon>> fetchPokemons() async {
     try {
