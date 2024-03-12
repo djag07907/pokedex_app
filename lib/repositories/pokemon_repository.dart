@@ -5,7 +5,7 @@ import '../models/pokemon_model.dart';
 class PokemonRepository {
   final baseUrl = 'https://pokeapi.co/api/v2/pokemon';
   int offset = 0;
-  int limit = 5;
+  int limit = 7;
 
   Future<List<Pokemon>> fetchPokemons() async {
     final response = await http.get(Uri.parse('$baseUrl?offset=$offset&limit=$limit'));
