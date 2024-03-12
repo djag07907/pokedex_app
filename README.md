@@ -23,13 +23,11 @@ Packages used:
 - http:^0.13.3
 - flutter_bloc: ^7.0.0
 - equatable: ^2.0.3
-- lottie: ^1.0.0
 - cupertino_icons: ^1.0.2
 
 Project/ Screen flow:
 
-1. Splash Screen is shown while application is starting.
-2. All Pokemons Screen
+1. All Pokemons Screen
 
 - All pokemons fetched from this API: <https://pokeapi.co>.
   Pagination is used since there are lots of Pokemons to be listed coming from API. (aprox 1302+)
@@ -43,12 +41,11 @@ Project/ Screen flow:
 ## Project Details
 
 - **Flutter Version**: 3.10.0
-- **Dart Version**: 2.15.0
+- **Dart Version**: 3.0.0
 - **Dependencies**:
   - http:^0.13.3
   - flutter_bloc: ^7.0.0
   - equatable: ^2.0.3
-  - lottie: ^1.0.0
   - cupertino_icons: ^1.0.2
 
 ## Code Structure
