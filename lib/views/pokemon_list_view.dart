@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokedex_app/widgets/pikachu_loading.dart';
 import '../bloc/pokemon_bloc.dart';
 import '../bloc/pokemon_event.dart';
 import '../bloc/pokemon_state.dart';
@@ -15,7 +16,7 @@ class PokemonListView extends StatelessWidget {
       body: BlocBuilder<PokemonBloc, PokemonState>(
         builder: (context, state) {
           if (state is PokemonLoading && state.pokemons.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: PikachuLoading());
           } else if (state is PokemonLoaded) {
             return Column(
               children: [
@@ -28,7 +29,7 @@ class PokemonListView extends StatelessWidget {
                     },
                   ),
                 ),
-                if (state.hasMore) const CircularProgressIndicator(),
+                if (state.hasMore) const PikachuLoading()
               ],
             );
           } else if (state is PokemonError) {

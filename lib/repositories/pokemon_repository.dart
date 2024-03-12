@@ -5,7 +5,7 @@ import '../models/pokemon_model.dart';
 class PokemonRepository {
   final baseUrl = 'https://pokeapi.co/api/v2/pokemon';
   int offset = 0;
-  int limit = 7;
+  int limit = 1302;
 
   Future<List<Pokemon>> fetchPokemons() async {
     final response = await http.get(Uri.parse('$baseUrl?offset=$offset&limit=$limit'));
@@ -15,7 +15,9 @@ class PokemonRepository {
       List<Pokemon> pokemons = pokemonsJson.map((json) {
         String name = json['name'];
         int id = int.parse(json['url'].split('/').reversed.elementAt(1));
-        return Pokemon(id: id, name: name);
+        String imageUrl =
+            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png";
+        return Pokemon(id: id, name: name, imageUrl: imageUrl);
       }).toList();
       print('Pokemons loaded successfully: ${pokemons.length} pokemons');
       offset += limit;
