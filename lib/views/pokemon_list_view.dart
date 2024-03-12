@@ -22,6 +22,7 @@ class _PokemonListViewState extends State<PokemonListView> {
   bool isLoading = false;
   List<Pokemon> displayedPokemonList = [];
   bool showRefreshIndicator = false;
+  double previousScrollPosition = 0.0;
 
   @override
   void initState() {
@@ -31,6 +32,7 @@ class _PokemonListViewState extends State<PokemonListView> {
     scrollController.addListener(() {
       if (!isLoading &&
           scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+        previousScrollPosition = scrollController.position.pixels;
         _refreshPokemons();
       }
     });
@@ -40,6 +42,10 @@ class _PokemonListViewState extends State<PokemonListView> {
           displayedPokemonList.addAll(state.pokemons);
           isLoading = false;
           showRefreshIndicator = false;
+          if (previousScrollPosition > 0) {
+            scrollController.jumpTo(previousScrollPosition);
+            previousScrollPosition = 0.0;
+          }
         });
       } else if (state is PokemonLoading) {
         setState(() {
