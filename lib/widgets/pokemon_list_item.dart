@@ -11,40 +11,67 @@ class PokemonListItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFFEB2E52),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(20),
       ),
       margin: const EdgeInsets.all(8),
-      // padding: const EdgeInsets.all(16),
       child: Row(
         children: [
-          Container(
-            width: 220,
-            height: 120,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('images/pink_pokeball.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Image.network(
-              pokemon.imageUrl,
-              width: 100,
-              height: 100,
-              // fit: BoxFit.cover,
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                _capitalizeFirstLetter(pokemon.name),
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+          Expanded(
+            child: Container(
+              height: 80,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('images/pink_pokeball.png'),
+                  fit: BoxFit.cover,
                 ),
               ),
-            ],
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 90,
+                    height: 90,
+                    child: Image.network(
+                      pokemon.imageUrl,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Flexible(
+                    child: Text(
+                      _capitalizeFirstLetter(pokemon.name),
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                      overflow: TextOverflow.visible,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(
+                    top: 30,
+                    right: 15,
+                  ),
+                  child: Text(
+                    '#${pokemon.id.toString().padLeft(3, '0')}',
+                    style: const TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontSize: 45,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFF05C74),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
