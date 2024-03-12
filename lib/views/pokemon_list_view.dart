@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokedex_app/views/error_view.dart';
 import 'package:pokedex_app/widgets/pikachu_loading.dart';
 import '../bloc/pokemon_bloc.dart';
-import '../bloc/pokemon_event.dart';
 import '../bloc/pokemon_state.dart';
 import '../widgets/pokemon_list_item.dart';
 
 class PokemonListView extends StatelessWidget {
-  const PokemonListView({Key? key}) : super(key: key);
+  final ScrollController scrollController = ScrollController();
+
+  PokemonListView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,30 +24,23 @@ class PokemonListView extends StatelessWidget {
               children: [
                 Expanded(
                   child: ListView.builder(
-                    itemCount: state.pokemons.length,
+                    controller: scrollController,
+                    itemCount: state.pokemons.length + (state.hasMore ? 1 : 0),
                     itemBuilder: (context, index) {
-                      final pokemon = state.pokemons[index];
-                      return PokemonListItem(pokemon: pokemon);
+                      if (index < state.pokemons.length) {
+                        final pokemon = state.pokemons[index];
+                        return PokemonListItem(pokemon: pokemon);
+                      } else {
+                        return const PikachuLoading();
+                      }
                     },
+                    addAutomaticKeepAlives: true,
                   ),
                 ),
-                if (state.hasMore) const PikachuLoading()
               ],
             );
           } else if (state is PokemonError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(state.message),
-                  ElevatedButton(
-                    onPressed: () => context.read<PokemonBloc>().add(FetchPokemons()),
-                    child: const Text('Try Again'),
-                  ),
-                  Image.asset('images/sad_pikachu.png'),
-                ],
-              ),
-            );
+            return ErrorView(errorMessage: state.message);
           } else {
             return Text('Current state: $state');
           }

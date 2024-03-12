@@ -12,7 +12,7 @@ class PokemonInitial extends PokemonState {}
 
 class PokemonLoading extends PokemonState {
   final List<Pokemon> pokemons;
-  PokemonLoading(this.pokemons);
+  const PokemonLoading(this.pokemons);
 
   @override
   List<Object> get props => [pokemons];
@@ -22,7 +22,7 @@ class PokemonLoaded extends PokemonState {
   final List<Pokemon> pokemons;
   final bool hasMore;
 
-  PokemonLoaded(this.pokemons, {required this.hasMore});
+  const PokemonLoaded(this.pokemons, {required this.hasMore});
 
   @override
   List<Object> get props => [pokemons, hasMore];

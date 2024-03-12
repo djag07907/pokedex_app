@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.red),
       home: BlocProvider(
         create: (context) => PokemonBloc(PokemonRepository())..add(FetchPokemons()),
-        child: const PokemonListView(),
+        child: PokemonListView(),
       ),
     );
   }
