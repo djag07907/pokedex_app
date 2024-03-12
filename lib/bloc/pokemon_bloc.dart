@@ -11,7 +11,7 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
       emit(const PokemonLoading([]));
       try {
         final pokemons = await _pokemonRepository.fetchPokemons();
-        emit(PokemonLoaded(pokemons, hasMore: pokemons.length > 5));
+        emit(PokemonLoaded(pokemons, hasMore: pokemons.length > 10));
       } catch (e) {
         emit(const PokemonError("Something went wrong"));
       }
