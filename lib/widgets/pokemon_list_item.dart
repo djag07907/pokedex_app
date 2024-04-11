@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
-import '../models/pokemon_model.dart';
+import 'package:pokedex_app/models/pokemon_model.dart';
+import 'package:pokedex_app/resources/themes.dart';
+import 'package:pokedex_app/resources/constants.dart';
 
 class PokemonListItem extends StatelessWidget {
   final Pokemon pokemon;
 
   const PokemonListItem({super.key, required this.pokemon});
 
+  String _capitalizeFirstLetter(String text) {
+    return text.substring(0, 1).toUpperCase() + text.substring(1);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFEB2E52),
+        color: mainBackground,
         borderRadius: BorderRadius.circular(20),
       ),
       margin: const EdgeInsets.all(8),
@@ -21,7 +27,7 @@ class PokemonListItem extends StatelessWidget {
               height: 80,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('images/pink_pokeball.png'),
+                  image: AssetImage(pinkPokeball),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -66,7 +72,7 @@ class PokemonListItem extends StatelessWidget {
                       fontStyle: FontStyle.italic,
                       fontSize: 45,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFF05C74),
+                      color: accentBackground,
                     ),
                   ),
                 ),
@@ -76,9 +82,5 @@ class PokemonListItem extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String _capitalizeFirstLetter(String text) {
-    return text.substring(0, 1).toUpperCase() + text.substring(1);
   }
 }

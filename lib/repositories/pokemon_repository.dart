@@ -1,24 +1,22 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import '../models/pokemon_model.dart';
+import 'package:pokedex_app/models/pokemon_model.dart';
+import 'package:pokedex_app/resources/api_endpoints.dart';
 
 class PokemonRepository {
-  final baseUrl = 'https://pokeapi.co/api/v2/pokemon';
-  int offset = 0;
   int limit = 10;
 
-  Future<List<Pokemon>> fetchPokemons() async {
+  Future<List<Pokemon>> fetchPokemons({int offset = 0}) async {
     try {
-      final response = await http.get(Uri.parse('$baseUrl?offset=$offset&limit=$limit'));
+      final response = await http.get(Uri.parse('$pokemonList?offset=$offset&limit=$limit'));
       if (response.statusCode == 200) {
         Map<String, dynamic> data = json.decode(response.body);
         List<dynamic> pokemonsJson = data['results'];
         List<Pokemon> pokemons = pokemonsJson.map((json) {
           String name = json['name'];
           int id = int.parse(json['url'].split('/').reversed.elementAt(1));
-          String imageUrl =
-              "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png";
+          String imageUrl = getPokemonImageUrl(id);
           return Pokemon(id: id, name: name, imageUrl: imageUrl);
         }).toList();
         if (kDebugMode) {

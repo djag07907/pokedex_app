@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex_app/bloc/pokemon_bloc.dart';
 import 'package:pokedex_app/bloc/pokemon_event.dart';
+import 'package:pokedex_app/resources/themes.dart';
+import 'package:pokedex_app/resources/constants.dart';
 
 class ErrorView extends StatelessWidget {
   final String errorMessage;
@@ -28,11 +30,11 @@ class ErrorView extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               const Text(
-                'Please try again later...',
+                tryAgainText,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
-                  color: Colors.grey,
+                  color: grey,
                 ),
               ),
             ],
@@ -40,15 +42,18 @@ class ErrorView extends StatelessWidget {
         ),
         Center(
           child: ElevatedButton(
-            onPressed: () => context.read<PokemonBloc>().add(FetchPokemons()),
+            onPressed: () => context.read<PokemonBloc>().add(const FetchPokemons()),
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              backgroundColor: const Color(0xFFEB2E52),
+              backgroundColor: mainBackground,
               padding: const EdgeInsets.symmetric(horizontal: 80.0),
             ),
-            child: const Text('Try Again Now'),
+            child: const Text(
+              tryNowText,
+              style: TextStyle(color: white),
+            ),
           ),
         ),
         Positioned(
@@ -56,7 +61,7 @@ class ErrorView extends StatelessWidget {
           left: 0.0,
           right: 0.0,
           child: Image.asset(
-            'images/sad_pikachu.png',
+            sadPikachu,
             width: 250.0,
             height: 250.0,
           ),

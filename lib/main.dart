@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'bloc/pokemon_bloc.dart';
-import 'repositories/pokemon_repository.dart';
-import 'views/pokemon_list_view.dart';
+import 'package:pokedex_app/bloc/pokemon_bloc.dart';
+import 'package:pokedex_app/services/pokemon_service.dart';
+import 'package:pokedex_app/views/pokemon_list_view.dart';
 
 void main() {
-  final PokemonBloc pokemonBloc = PokemonBloc(PokemonRepository());
+  final PokemonBloc pokemonBloc = PokemonBloc(PokemonService());
   runApp(MyApp(pokemonBloc: pokemonBloc));
 }
 

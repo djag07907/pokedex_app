@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex_app/views/error_view.dart';
 import 'package:pokedex_app/widgets/pikachu_loading.dart';
-import '../bloc/pokemon_bloc.dart';
-import '../bloc/pokemon_event.dart';
-import '../bloc/pokemon_state.dart';
-import '../models/pokemon_model.dart';
-import '../widgets/pokemon_list_item.dart';
+import 'package:pokedex_app/bloc/pokemon_bloc.dart';
+import 'package:pokedex_app/bloc/pokemon_event.dart';
+import 'package:pokedex_app/bloc/pokemon_state.dart';
+import 'package:pokedex_app/models/pokemon_model.dart';
+import 'package:pokedex_app/widgets/pokemon_list_item.dart';
+import 'package:pokedex_app/resources/constants.dart';
 
 class PokemonListView extends StatefulWidget {
   const PokemonListView({Key? key}) : super(key: key);
@@ -28,12 +29,12 @@ class _PokemonListViewState extends State<PokemonListView> {
   void initState() {
     super.initState();
     pokemonBloc = BlocProvider.of<PokemonBloc>(context);
-    pokemonBloc.add(FetchPokemons());
+    pokemonBloc.add(const FetchPokemons());
     scrollController.addListener(() {
       if (!isLoading &&
           scrollController.position.pixels == scrollController.position.maxScrollExtent) {
         previousScrollPosition = scrollController.position.pixels;
-        _refreshPokemons();
+        _refreshPokemons(offset: displayedPokemonList.length);
       }
     });
     pokemonBloc.stream.listen((state) {
@@ -56,18 +57,18 @@ class _PokemonListViewState extends State<PokemonListView> {
     });
   }
 
-  Future<void> _refreshPokemons() async {
+  Future<void> _refreshPokemons({int offset = 0}) async {
     setState(() {
       isLoading = true;
       showRefreshIndicator = true;
     });
-    pokemonBloc.add(FetchPokemons());
+    pokemonBloc.add(FetchPokemons(offset: offset));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Pokedex - Daniel Alvarez')),
+      appBar: AppBar(title: const Text(appTItle)),
       body: BlocBuilder<PokemonBloc, PokemonState>(
         builder: (context, state) {
           if (state is PokemonLoading && displayedPokemonList.isEmpty) {

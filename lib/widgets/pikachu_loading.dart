@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex_app/resources/constants.dart';
 
 class PikachuLoading extends StatelessWidget {
   const PikachuLoading({Key? key}) : super(key: key);
@@ -9,12 +10,12 @@ class PikachuLoading extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(
-          'images/loading.gif',
+          pikachuRunning,
           width: 50,
           height: 50,
         ),
         const SizedBox(height: 10),
-        const Text("Loading..."),
+        const Text(loadingText),
       ],
     );
   }
