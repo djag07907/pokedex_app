@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokedex_app/commons/pokemon_modal.dart';
 import 'package:pokedex_app/views/error_view.dart';
-import 'package:pokedex_app/widgets/pikachu_loading.dart';
+import 'package:pokedex_app/commons/pikachu_loading.dart';
 import 'package:pokedex_app/bloc/pokemon_bloc.dart';
 import 'package:pokedex_app/bloc/pokemon_event.dart';
 import 'package:pokedex_app/bloc/pokemon_state.dart';
@@ -57,6 +58,14 @@ class _PokemonListViewState extends State<PokemonListView> {
     });
   }
 
+  void _showPokemonDetailsModal(BuildContext context, Pokemon pokemon) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return PokemonDetailsModal(pokemon: pokemon);
+        });
+  }
+
   Future<void> _refreshPokemons({int offset = 0}) async {
     setState(() {
       isLoading = true;
@@ -83,7 +92,11 @@ class _PokemonListViewState extends State<PokemonListView> {
                   itemCount: displayedPokemonList.length,
                   itemBuilder: (context, index) {
                     final pokemon = displayedPokemonList[index];
-                    return PokemonListItem(pokemon: pokemon);
+                    return GestureDetector(
+                        onTap: () {
+                          _showPokemonDetailsModal(context, pokemon);
+                        },
+                        child: PokemonListItem(pokemon: pokemon));
                   },
                 ),
                 if (showRefreshIndicator)
