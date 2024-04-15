@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex_app/commons/pokemon_modal.dart';
@@ -59,6 +60,14 @@ class _PokemonListViewState extends State<PokemonListView> {
   }
 
   void _showPokemonDetailsModal(BuildContext context, Pokemon pokemon) {
+    if (kDebugMode) {
+      if (pokemon.types.isEmpty) {
+        // Assuming the Pokemon must have at least one type
+        // Add a default type if none are present
+        pokemon.types.add('Default Type');
+      }
+      print('Clicked Pokemon Types: ${pokemon.types}');
+    }
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {

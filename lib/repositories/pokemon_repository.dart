@@ -17,11 +17,21 @@ class PokemonRepository {
           String name = json['name'];
           int id = int.parse(json['url'].split('/').reversed.elementAt(1));
           String imageUrl = getPokemonImageUrl(id);
-          return Pokemon(id: id, name: name, imageUrl: imageUrl);
+
+          List<String> types = [];
+          if (json.containsKey('types') && json['types'] != null) {
+            types = (json['types'] as List<dynamic>).map((type) {
+              return type['type']['name'].toString();
+            }).toList();
+          }
+
+          return Pokemon(id: id, name: name, imageUrl: imageUrl, types: types);
         }).toList();
+
         if (kDebugMode) {
           print('Pokemons loaded successfully: ${pokemons.length} pokemons');
         }
+
         offset += limit;
         return pokemons;
       } else if (response.statusCode == 400) {

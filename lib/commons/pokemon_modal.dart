@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex_app/models/pokemon_model.dart';
+import 'package:pokedex_app/resources/themes.dart';
+import 'package:pokedex_app/views/pokemon_details_view.dart';
 
 class PokemonDetailsModal extends StatelessWidget {
   final Pokemon pokemon;
+  String _capitalizeFirstLetter(String text) {
+    return text.substring(0, 1).toUpperCase() + text.substring(1);
+  }
 
   const PokemonDetailsModal({Key? key, required this.pokemon}) : super(key: key);
 
@@ -15,9 +20,11 @@ class PokemonDetailsModal extends StatelessWidget {
         children: [
           AppBar(
             title: Text(
-              '${pokemon.name} #${pokemon.id}',
+              _capitalizeFirstLetter('${pokemon.name} #${pokemon.id.toString().padLeft(3, '0')}'),
             ),
+            backgroundColor: mainBackground,
           ),
+          PokemonDetailsView(pokemon: pokemon)
         ],
       ),
     );
