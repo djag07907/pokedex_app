@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokedex_app/commons/pokemon_modal.dart';
+import 'package:pokedex_app/commons/pokemon_details_modal.dart';
+import 'package:pokedex_app/repositories/pokemon_repository.dart';
 import 'package:pokedex_app/views/error_view.dart';
 import 'package:pokedex_app/commons/pikachu_loading.dart';
 import 'package:pokedex_app/bloc/pokemon_bloc.dart';
@@ -59,20 +60,30 @@ class _PokemonListViewState extends State<PokemonListView> {
     });
   }
 
-  void _showPokemonDetailsModal(BuildContext context, Pokemon pokemon) {
+  void _showPokemonDetailsModal(BuildContext context, Pokemon pokemon) async {
     if (kDebugMode) {
       if (pokemon.types.isEmpty) {
         // Assuming the Pokemon must have at least one type
         // Add a default type if none are present
         pokemon.types.add('Default Type');
       }
+      if (pokemon.types.isNotEmpty) {
+        print('Hay datos');
+      }
       print('Clicked Pokemon Types: ${pokemon.types}');
     }
+    final detailedPokemon = await _fetchPokemonDetails(pokemon.id);
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return PokemonDetailsModal(pokemon: pokemon);
+          return PokemonDetailsModal(pokemon: detailedPokemon);
         });
+  }
+
+  Future<Pokemon> _fetchPokemonDetails(int id) async {
+    final repository = PokemonRepository();
+    final pokemon = await repository.fetchPokemonDetails(id);
+    return pokemon;
   }
 
   Future<void> _refreshPokemons({int offset = 0}) async {

@@ -17,7 +17,38 @@ Color getColorForType(String type) {
       return grassBackground;
     case 'fire':
       return fireBackground;
-    // TODO: Add more colors
+    case 'water':
+      return waterBackground;
+    case 'electric':
+      return electricBackground;
+    case 'poison':
+      return poisonBackground;
+    case 'bug':
+      return bugBackground;
+    case 'normal':
+      return normalBackground;
+    case 'fighting':
+      return fightingBackground;
+    case 'ground':
+      return groundBackground;
+    case 'fairy':
+      return fairyBackground;
+    case 'psychic':
+      return psychicBackground;
+    case 'rock':
+      return rockBackground;
+    case 'ghost':
+      return ghostBackground;
+    case 'ice':
+      return iceBackground;
+    case 'dragon':
+      return dragonBackground;
+    case 'dark':
+      return rockBackground;
+    case 'steel':
+      return steelBackground;
+    case 'flying':
+      return flyingBackground;
     default:
       return Colors.grey;
   }
@@ -34,8 +65,8 @@ class _PokemonDetailsViewState extends State<PokemonDetailsView> {
           Expanded(
             child: Image.network(
               widget.pokemon.imageUrl,
-              width: 150,
-              height: 150,
+              width: 100,
+              height: 100,
             ),
           ),
           Expanded(
@@ -48,7 +79,10 @@ class _PokemonDetailsViewState extends State<PokemonDetailsView> {
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: getColorForType(type),
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
