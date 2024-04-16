@@ -31,9 +31,8 @@ class PokemonDetailsModal extends StatelessWidget {
           PokemonDetailsView(pokemon: pokemon),
           // Text('Pokemon Types: ${pokemon.types.join(', ')}'),
           // Text('Types: ${pokemon.types.join(', ')}'),
-          const Text("More information here."),
-          const Text("More information here."),
-          const Text("More information here."),
+          // const Text('Description: ${pokemon.}'),
+          // const Text("More information here."),
           const SizedBox(
             height: 25,
           ),

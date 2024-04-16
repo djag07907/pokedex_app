@@ -1,7 +1,9 @@
 const pinkPokeball = 'images/pink_pokeball.png';
 const pikachuRunning = 'images/loading.gif';
 const sadPikachu = 'images/sad_pikachu.png';
+const missigno = 'images/missigno.png';
 const imageUrl = '';
+const pokemonTypesText = 'Types:';
 const loadingText = 'Loading...';
 const appTItle = 'Pokedex - Daniel Alvarez';
 const tryAgainText = 'Please try again later...';

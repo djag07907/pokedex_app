@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex_app/models/pokemon_model.dart';
+import 'package:pokedex_app/resources/constants.dart';
 import 'package:pokedex_app/resources/themes.dart';
 
 class PokemonDetailsView extends StatefulWidget {
@@ -9,6 +10,10 @@ class PokemonDetailsView extends StatefulWidget {
 
   @override
   State<PokemonDetailsView> createState() => _PokemonDetailsViewState();
+}
+
+String _capitalizeFirstLetter(String text) {
+  return text.substring(0, 1).toUpperCase() + text.substring(1);
 }
 
 Color getColorForType(String type) {
@@ -63,39 +68,68 @@ class _PokemonDetailsViewState extends State<PokemonDetailsView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Image.network(
-              widget.pokemon.imageUrl,
-              width: 100,
-              height: 100,
-            ),
+            child: widget.pokemon.imageUrl.isNotEmpty
+                ? Image.network(
+                    widget.pokemon.imageUrl,
+                    width: 200,
+                    height: 200,
+                  )
+                : Image.asset(
+                    missigno,
+                    width: 200,
+                    height: 200,
+                  ),
           ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: widget.pokemon.types
-                  .map(
-                    (type) => ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: getColorForType(type),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
+              children: [
+                const Text(
+                  pokemonTypesText,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                ...widget.pokemon.types
+                    .map(
+                      (type) => ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: getColorForType(type),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                        child: Text(
+                          _capitalizeFirstLetter(type),
+                          style: const TextStyle(
+                            color: white,
+                          ),
                         ),
                       ),
-                      child: Text(
-                        type,
-                        style: const TextStyle(
-                          color: white,
-                        ),
-                      ),
+                    )
+                    .toList(),
+                const SizedBox(
+                  height: 15,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Height: ${(widget.pokemon.height / 10).toStringAsFixed(1)} m',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                  )
-                  .toList(),
+                    Text(
+                      'Weight: ${(widget.pokemon.weight / 10).toStringAsFixed(1)} kg',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                )
+              ],
             ),
           ),
         ],

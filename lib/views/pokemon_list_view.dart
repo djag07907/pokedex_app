@@ -63,12 +63,10 @@ class _PokemonListViewState extends State<PokemonListView> {
   void _showPokemonDetailsModal(BuildContext context, Pokemon pokemon) async {
     if (kDebugMode) {
       if (pokemon.types.isEmpty) {
-        // Assuming the Pokemon must have at least one type
-        // Add a default type if none are present
         pokemon.types.add('Default Type');
       }
       if (pokemon.types.isNotEmpty) {
-        print('Hay datos');
+        print('There is pokemon data');
       }
       print('Clicked Pokemon Types: ${pokemon.types}');
     }

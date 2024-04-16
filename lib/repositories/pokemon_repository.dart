@@ -19,18 +19,20 @@ class PokemonRepository {
           String name = json['name'];
           int id = int.parse(json['url'].split('/').reversed.elementAt(1));
           String imageUrl = getPokemonImageUrl(id);
-
           pokemons.add(Pokemon(
             id: id,
             name: name,
             imageUrl: imageUrl,
             types: [],
+            height: 0,
+            weight: 0,
           ));
         }
 
         if (kDebugMode) {
           print('Pokemons loaded successfully: ${pokemons.length} pokemons');
         }
+        offset += limit;
         return pokemons;
       } else {
         if (kDebugMode) {
@@ -46,12 +48,10 @@ class PokemonRepository {
     }
   }
 
-  // Assuming this method exists to fetch detailed information for each Pokémon
   Future<Pokemon> fetchPokemonDetails(int id) async {
     final response = await http.get(Uri.parse('$pokemonList/$id'));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      // Assuming the Pokemon model has been extended to include detailed fields
       return Pokemon.fromJson(data);
     } else {
       throw Exception('Failed to load pokemon details');

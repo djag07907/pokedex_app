@@ -36,10 +36,12 @@ class PokemonListItem extends StatelessWidget {
                   SizedBox(
                     width: 90,
                     height: 90,
-                    child: Image.network(
-                      pokemon.imageUrl,
-                      fit: BoxFit.cover,
-                    ),
+                    child: pokemon.imageUrl.isNotEmpty
+                        ? Image.network(
+                            pokemon.imageUrl,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(missigno),
                   ),
                   Flexible(
                     child: Text(
